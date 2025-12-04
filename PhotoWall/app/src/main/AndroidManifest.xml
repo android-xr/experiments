@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="org.khronos.openxr.permission.OPENXR" />
+    <uses-permission android:name="android.permission.XR_TRACKING_IN_BACKGROUND" />
+    <uses-permission android:name="android.permission.IMPORT_XR_ANCHOR" />
+    <uses-permission android:name="android.permission.EYE_CALIBRATION" />
+    <uses-permission android:name="android.permission.FACE_TRACKING_CALIBRATION" />
+    <uses-permission android:name="android.permission.SCENE_UNDERSTANDING_COARSE"/>
+    <uses-permission android:name="android.permission.HEAD_TRACKING"/>
+    <uses-permission android:name="android.permission.HAND_TRACKING"/>
+    <uses-feature android:name="android.software.xr.immersive" android:required="true" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.PhotoWall">
+        <activity
+            android:exported="true"
+            android:theme="@style/Theme.PhotoWall"
+            android:name=".MainActivity">
+            <property
+                android:name="android.window.PROPERTY_XR_ACTIVITY_START_MODE"
+                android:value="XR_ACTIVITY_START_MODE_FULL_SPACE_MANAGED" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
