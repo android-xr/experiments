@@ -32,12 +32,3 @@ In the sample you can see an implementation of:
 
 **Sports Companion App** is distributed under the terms of the Apache License (Version 2.0). See the
 [license](LICENSE) for more information.
-
-# Notice
-
-This is not an officially supported Google product. This project is not
-eligible for the [Google Open Source Software Vulnerability Rewards
-Program](https://bughunters.google.com/open-source-security).
-
-This project is intended for demonstration purposes only. It is not
-intended for use in a production environment.
