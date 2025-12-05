@@ -28,7 +28,7 @@ Android XR Experiments use the Gradle build system and can be imported directly 
 - https://developer.android.com/design/ui/xr
 
 ## License
-Android XR experiments are distributed under the terms of the Apache License (Version 2.0). See the [license](https://github.com/android/xr-samples/blob/main/LICENSE) for more information.
+Android XR experiments are distributed under the terms of the Apache License (Version 2.0). See the [license](https://github.com/android-xr/experiments/blob/main/LICENSE) for more information.
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
