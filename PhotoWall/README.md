@@ -25,15 +25,15 @@ For more information, please [read the documentation](https://developer.android.
 
 - ### **Simulated Body-Tracking UI**
 
-## Simulated body-tracking is a modified version of head-tracked UI. With body-tracking, the UI is only repositioned when the head pose exceeds a specified threshold. This allows the user to look around the environment while the UI stays stationary. If the UI is out of range, it smoothly repositions in front of the user.
+    Simulated body-tracking is a modified version of head-tracked UI. With body-tracking, the UI is only repositioned when the head pose exceeds a specified threshold. This allows the user to look around the environment while the UI stays stationary. If the UI is out of range, it smoothly repositions in front of the user.
 
 - ### **ARCore Plane Detection and Filtering**
 
-## As photos are interacted with (dragged) in the scene, a hitTest is performed against all Trackables. The Trackables are then filtered to determine if the pointer ray intersects with a Wall plane. If an intersecting Wall plane is found, the photo is previewed in the wall-snapped pose.
+    As photos are interacted with (dragged) in the scene, a hitTest is performed against all Trackables. The Trackables are then filtered to determine if the pointer ray intersects with a Wall plane. If an intersecting Wall plane is found, the photo is previewed in the wall-snapped pose.
 
 - ### **ARCore Anchors**
 
-## If a dragged photo is placed on a wall plane, an anchor is created for that entity. This anchor allows the photo to maintain its position relative to the real-world environment \- even if the activity space and perception space diverge.
+    If a dragged photo is placed on a wall plane, an anchor is created for that entity. This anchor allows the photo to maintain its position relative to the real-world environment \- even if the activity space and perception space diverge.
 
 ## **Development Environment and Requirements**
 
