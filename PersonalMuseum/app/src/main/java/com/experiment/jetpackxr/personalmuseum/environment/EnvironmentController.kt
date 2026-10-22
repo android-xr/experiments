@@ -16,8 +16,10 @@
 package com.experiment.jetpackxr.personalmuseum.environment
 
 import android.util.Log
-import androidx.xr.scenecore.ExrImage
+import androidx.xr.compose.platform.LocalSession
+//import androidx.xr.scenecore.ExrImage
 import androidx.xr.scenecore.GltfModel
+import androidx.xr.scenecore.ImageBasedLightingAsset
 import androidx.xr.scenecore.SpatialEnvironment
 import androidx.xr.scenecore.Scene
 import androidx.xr.runtime.Session
@@ -39,10 +41,12 @@ object EnvironmentController {
         try {
             if (activeEnvironmentModelName != environmentModelName) {
                 val environmentModel = environmentModelName?.let {assetCache[environmentModelName] as GltfModel}
-                val environmentImage: ExrImage? = environmentImageName?.let { assetCache[it] as ExrImage? }
+                val imageBasedLightingAsset = environmentImageName?.let {
+                    assetCache[it] as? ImageBasedLightingAsset
+                }
 
                 SpatialEnvironment.SpatialEnvironmentPreference(
-                    skybox = environmentImage,
+                    imageBasedLightingAsset = imageBasedLightingAsset,
                     geometry = environmentModel
                 ).let {
                     xrScene.spatialEnvironment.preferredSpatialEnvironment = it
@@ -67,6 +71,16 @@ object EnvironmentController {
                 assetCache[envModelName] = gltfModel
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to load $envModelPath: $e")
+            }
+        }
+    }
+    suspend fun loadEnvironmentImageAssetAsync(session: Session, imagePath: String, imageName: String) {
+        if (!assetCache.containsKey(imageName)) {
+            try {
+                val iblAsset = ImageBasedLightingAsset.createFromZip(session, Path.of(imagePath, imageName))
+                assetCache[imageName] = iblAsset
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to load IBL asset $imagePath: $e")
             }
         }
     }

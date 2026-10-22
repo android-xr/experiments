@@ -67,7 +67,7 @@ class EntityYAxisRotationHandler(
 
     override fun accept(inputEvent: InputEvent) {
         when (inputEvent.action) {
-            Action.ACTION_DOWN -> {
+            Action.DOWN-> {
                 // todo- leveraging hitInfo would be a little better than just using the object's translation
                 // to construct the plane, but it seems to not be hooked up yet.
                 gltfEntity?.let {
@@ -107,10 +107,10 @@ class EntityYAxisRotationHandler(
                     )
                 }
             }
-            Action.ACTION_UP -> {
+            Action.UP -> {
                 currentInteraction = null
             }
-            Action.ACTION_MOVE -> {
+            Action.MOVE -> {
                 val ci = currentInteraction
                 if (ci == null) {
                     return
