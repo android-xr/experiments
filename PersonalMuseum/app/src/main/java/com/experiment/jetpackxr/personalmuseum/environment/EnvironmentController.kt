@@ -16,13 +16,11 @@
 package com.experiment.jetpackxr.personalmuseum.environment
 
 import android.util.Log
-import androidx.xr.compose.platform.LocalSession
-//import androidx.xr.scenecore.ExrImage
+import androidx.xr.runtime.Session
 import androidx.xr.scenecore.GltfModel
 import androidx.xr.scenecore.ImageBasedLightingAsset
-import androidx.xr.scenecore.SpatialEnvironment
 import androidx.xr.scenecore.Scene
-import androidx.xr.runtime.Session
+import androidx.xr.scenecore.SpatialEnvironment
 import java.nio.file.Path
 
 object EnvironmentController {
