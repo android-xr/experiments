@@ -17,17 +17,19 @@ package com.experiment.jetpackxr.personalmuseum.util
 
 
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts.RequestMultiplePermissions
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.xr.runtime.Session
 import androidx.xr.runtime.SessionCreateApkRequired
 import androidx.xr.runtime.SessionCreateSuccess
+import androidx.xr.runtime.SessionCreateTimedOut
+import androidx.xr.runtime.SessionCreateUnknownError
 import androidx.xr.runtime.SessionCreateUnsupportedDevice
-import androidx.xr.runtime.SessionResumeSuccess
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Observer class to manage the lifecycle of the Jetpack XR Runtime Session based on the lifecycle
@@ -38,21 +40,39 @@ class RunTimeSessionHelper(
 ) : DefaultLifecycleObserver {
 
     internal lateinit var session: Session
-    internal lateinit var requestPermissionLauncher: ActivityResultLauncher<Array<String>>
 
     override fun onCreate(owner: LifecycleOwner) {
         // Sessions can only be instantiated with an instance of [ComponentActivity].
         check(owner is ComponentActivity) { "owner is not an instance of ComponentActivity" }
-        when (val result = Session.create(owner)) {
-            is SessionCreateSuccess -> {
-                session = result.session
-                onCreateCallback.invoke(session)
+
+        owner.lifecycleScope.launch {
+            val result = withContext(Dispatchers.IO) {
+                Session.create(
+                    context = owner,
+                    coroutineContext = coroutineContext,
+                    lifecycleOwner = owner
+                )
             }
-            is SessionCreateApkRequired -> {
-                Log.e(TAG, "Session APK required")
-            }
-            is SessionCreateUnsupportedDevice -> {
-                Log.e(TAG, "Session unsupported device")
+            when (result) {
+                is SessionCreateSuccess -> {
+                    session = result.session
+                    onCreateCallback.invoke(session)
+                }
+                is SessionCreateApkRequired -> {
+                    Log.e(TAG, "Session APK required: ${result.requiredApk}")
+                }
+                is SessionCreateUnsupportedDevice -> {
+                    Log.e(TAG, "Session unsupported device")
+                }
+                is SessionCreateTimedOut -> {
+                    Log.e(TAG, "Session creation timed out")
+                }
+                is SessionCreateUnknownError -> {
+                    Log.e(TAG, "Session creation unknown error: ${result.errorMessage}")
+                }
+                else -> {
+                    Log.e(TAG, "Session creation failed: $result")
+                }
             }
         }
     }
